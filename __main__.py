@@ -27,6 +27,7 @@ def info():
     print """isoarc Copyright (C) 2015 Václav Mach
 This program comes with ABSOLUTELY NO WARRANTY
 This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE for details."""
+
 # =======================================================================================
 def init():
     pygame.init()
@@ -37,9 +38,9 @@ def init():
 def load_images():
     images = []
 
-    images.append(pygame.image.load("tile3.png"))
-    images.append(pygame.image.load("land.png"))
-    images.append(pygame.image.load("horiz.png"))
+    images.append(pygame.image.load("res/tile3.png"))
+    images.append(pygame.image.load("res/land.png"))
+    images.append(pygame.image.load("res/horiz.png"))
     # index v poli musi odpovidat cislu reprezentujicimu dany objekt v mape
     # viz vykreslovaci logika
 
@@ -71,7 +72,6 @@ def main():
                 [0,0,0,0,0,0],
                 [0,0,0,0,0,0],
                 [0,0,0,0,0,0]]
-
 
     while running:
         for event in pygame.event.get():
