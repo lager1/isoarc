@@ -48,9 +48,6 @@ def load_images():
 # =======================================================================================
 # isometric version
 def place_tile(tile_type, pos_x, pos_y, screen):
-    #screen.blit(tile_type, ((2 * pos_y + pos_x) / 2, (2 * pos_y - pos_x) / 2))
-    #screen.blit(tile_type, ((2 * pos_y + pos_x) / 2 - pos_x / 4, (2 * pos_y - pos_x) / 2 + pos_y / 4))
-    #screen.blit(tile_type, ((2 * pos_y + pos_x) / 2 + pos_x / 4, (2 * pos_y - pos_x) / 2 + pos_x / 8))
     screen.blit(tile_type, ((2 * pos_y + pos_x) / 2 + pos_x / 4, (2 * pos_y - pos_x) / 2 + pos_x / 8))
 
 # =======================================================================================
@@ -67,15 +64,6 @@ def main():
 
     images = load_images()
     tile_width = tile_height = 40
-
-    #game_map = [[1,1,1,1,1,1],
-    #            [1,0,0,0,0,1],
-    #            [1,0,0,0,0,1],
-    #            [1,0,0,0,0,1],
-    #            [1,0,0,0,0,1],
-    #            [1,1,1,1,1,1]]
-
-
 
     game_map = [[0,0,0,0,0,0],
                 [0,0,0,0,0,0],
@@ -95,39 +83,12 @@ def main():
             #for j in range(0, len(game_map[i])):
                 # zaporny range, aby bylo vizualne spravne
             for j in range(len(game_map[i]), 0, -1):
-                #print j
-                #place_tile(images[game_map[i][j]], 100 + j * tile_width, 400 + i * tile_height, screen)
-                #place_tile(images[game_map[i][j - 1]], 100 + j * tile_width, 400 + i * tile_height, screen)
                 place_tile(images[game_map[i][j - 1]], 100 + j * tile_width, 400 + i * tile_height / 2, screen)
-
-
-            # TODO vice klaves najednou
-
-        #    if event.type == pygame.KEYDOWN:
-        #        if event.key == pygame.K_DOWN:
-        #            direction = (0, 2)
-
-        #        if event.key == pygame.K_UP:
-        #            direction = (0, -2)
-
-        #        if event.key == pygame.K_RIGHT:
-        #            direction = (2, 0)
-
-        #        if event.key == pygame.K_LEFT:
-        #            direction = (-2, 0)
-
-        #    if event.type == pygame.KEYUP:
-        #        direction = (0, 0)
-
-        #position[0] += direction[0]
-        #position[1] += direction[1]
-
 
         #screen.fill(black)
 
         pygame.time.Clock().tick(30)  # 30 fps
         pygame.display.flip()
-
 
     return 0
 
