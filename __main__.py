@@ -38,9 +38,7 @@ def init():
 def load_images():
     images = []
 
-    images.append(pygame.image.load("res/tile3.png"))
     images.append(pygame.image.load("res/land.png"))
-    images.append(pygame.image.load("res/horiz.png"))
     # index v poli musi odpovidat cislu reprezentujicimu dany objekt v mape
     # viz vykreslovaci logika
 
