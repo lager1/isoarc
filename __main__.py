@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # encoding: utf-8
 
 # =======================================================================================
@@ -24,9 +24,7 @@ import pygame
 
 # =======================================================================================
 def info():
-    print """isoarc Copyright (C) 2015 Václav Mach
-This program comes with ABSOLUTELY NO WARRANTY
-This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE for details."""
+    print("isoarc Copyright (C) 2015 Václav Mach\n This program comes with ABSOLUTELY NO WARRANTY\n This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE for details.")
 
 # =======================================================================================
 def init():
@@ -35,20 +33,58 @@ def init():
     return screen
 
 # =======================================================================================
-def load_images():
-    images = []
+class Map:
+	def __init__(self, screen, tile_width, tile_height):
+		self.screen = screen
+		self.tile_width = tile_width
+		self.tile_height = tile_height
+		self.tiles = self.loadImages()
+		self.game_map = [[[0,0,0,0,0,0],
+                		[0,0,0,0,0,0],
+               			[0,0,-1,-1,0,0],
+                		[0,0,0,-1,-1,0],
+                		[0,0,0,0,0,0],
+                		[0,0,-1,-1,0,0]],
+                                [[0,0,0,0,-1,-1],
+                		[0,0,0,-1,-1,-1],
+               			[0,0,-1,-1,-1,-1],
+                		[-1,-1,-1,-1,-1,-1],
+                		[0,-1,-1,-1,-1,-1],
+                		[0,-1,-1,-1,-1,-1]],
+				[[0,0,-1,-1,-1,-1],
+                		[0,-1,-1,-1,-1,-1],
+               			[-1,-1,-1,-1,-1,-1],
+                		[-1,-1,-1,-1,-1,-1],
+                		[-1,-1,-1,-1,-1,-1],
+                		[-1,-1,-1,-1,-1,-1]]]
 
-    images.append(pygame.image.load("res/land.png"))
-    # index v poli musi odpovidat cislu reprezentujicimu dany objekt v mape
-    # viz vykreslovaci logika
+	def loadImages(self):
+		images = []
 
-    return images
+		images.append(pygame.image.load("res/tile3.png"))
+		images.append(pygame.image.load("res/land.png"))
+		images.append(pygame.image.load("res/horiz.png"))
+		
+		return images
 
-# =======================================================================================
-# isometric version
-def place_tile(tile_type, pos_x, pos_y, screen):
-    screen.blit(tile_type, ((2 * pos_y + pos_x) / 2 + pos_x / 4, (2 * pos_y - pos_x) / 2 + pos_x / 8))
-
+	def getTile(self, coord_x, coord_y, coord_z):
+		if self.game_map[coord_z][coord_x][coord_y] != -1:
+			return self.tiles[self.game_map[coord_z][coord_x][coord_y]]
+		else:
+			return None
+	def getMaxCoordX(self):
+		return len(self.game_map[0][0])
+	def getMaxCoordY(self):
+		return len(self.game_map[0])
+	def getMaxCoordZ(self):
+		return len(self.game_map)
+	def renderMap(self, pos_x, pos_y):
+		for k in range(0,self.getMaxCoordZ()):	
+			for i in range(0, self.getMaxCoordX()):
+                		for j in range(0, self.getMaxCoordY()):
+                        		if self.getTile(i,j,k) is not None:
+                        			self.screen.blit(self.getTile(i,j,k), (pos_x + (j - i) * self.tile_width / 2, pos_y + (i + j) * self.tile_height / 2 - self.tile_height * k ))
+		
 # =======================================================================================
 def main():
     info()
@@ -60,32 +96,35 @@ def main():
     width = height = 50
     position = [0, 0]
     direction = (0, 0)
-
-    images = load_images()
-    tile_width = tile_height = 40
-
-    game_map = [[0,0,0,0,0,0],
-                [0,0,0,0,0,0],
-                [0,0,0,0,0,0],
-                [0,0,0,0,0,0],
-                [0,0,0,0,0,0],
-                [0,0,0,0,0,0]]
+    #inital position of 0,0,0 tile
+    pos_x = 250
+    pos_y = 400
+    tile_width = 60
+    tile_height = 30
+    map = Map(screen, tile_width, tile_height)
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+            	if event.key == pygame.K_LEFT:
+                	screen.fill(black)
+                	pos_x -= 10
+            	if event.key == pygame.K_RIGHT:
+                	screen.fill(black)
+                	pos_x += 10
+            	if event.key == pygame.K_UP:
+                	screen.fill(black)
+                	pos_y -= 10
+            	if event.key == pygame.K_DOWN:
+                	screen.fill(black)
+                	pos_y += 10
 
+        map.renderMap(pos_x, pos_y)
 
-        for i in range(0, len(game_map)):
-            #for j in range(0, len(game_map[i])):
-                # zaporny range, aby bylo vizualne spravne
-            for j in range(len(game_map[i]), 0, -1):
-                place_tile(images[game_map[i][j - 1]], 100 + j * tile_width, 400 + i * tile_height / 2, screen)
-
-        #screen.fill(black)
-
-        pygame.time.Clock().tick(30)  # 30 fps
+	# 30 fps
+        pygame.time.Clock().tick(30)
         pygame.display.flip()
 
     return 0
