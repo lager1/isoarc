@@ -24,7 +24,7 @@ import pygame
 
 # =======================================================================================
 def info():
-    print("isoarc Copyright (C) 2015 Václav Mach\n This program comes with ABSOLUTELY NO WARRANTY\n This is free software, and you are welcome to redistribute it under certain conditions, see LICENSE for details.")
+    print("isoarc Copyright (C) 2015 Václav Mach\nThis program comes with ABSOLUTELY NO WARRANTY\nThis is free software, and you are welcome to redistribute it under certain conditions, see LICENSE for details.")
 
 # =======================================================================================
 def init():
@@ -34,57 +34,59 @@ def init():
 
 # =======================================================================================
 class Map:
-	def __init__(self, screen, tile_width, tile_height):
-		self.screen = screen
-		self.tile_width = tile_width
-		self.tile_height = tile_height
-		self.tiles = self.loadImages()
-		self.game_map = [[[0,0,0,0,0,0],
-                		[0,0,0,0,0,0],
-               			[0,0,-1,-1,0,0],
-                		[0,0,0,-1,-1,0],
-                		[0,0,0,0,0,0],
-                		[0,0,-1,-1,0,0]],
-                                [[0,0,0,0,-1,-1],
-                		[0,0,0,-1,-1,-1],
-               			[0,0,-1,-1,-1,-1],
-                		[-1,-1,-1,-1,-1,-1],
-                		[0,-1,-1,-1,-1,-1],
-                		[0,-1,-1,-1,-1,-1]],
-				[[0,0,-1,-1,-1,-1],
-                		[0,-1,-1,-1,-1,-1],
-               			[-1,-1,-1,-1,-1,-1],
-                		[-1,-1,-1,-1,-1,-1],
-                		[-1,-1,-1,-1,-1,-1],
-                		[-1,-1,-1,-1,-1,-1]]]
+    def __init__(self, screen, tile_width, tile_height):
+        self.screen = screen
+        self.tile_width = tile_width
+        self.tile_height = tile_height
+        self.tiles = self.loadImages()
+        self.game_map = [[[0,0,0,0,0,0],
+                          [0,0,0,0,0,0],
+                          [0,0,-1,-1,0,0],
+                          [0,0,0,-1,-1,0],
+                          [0,0,0,0,0,0],
+                          [0,0,-1,-1,0,0]],
 
-	def loadImages(self):
-		images = []
+                         [[0,0,0,0,-1,-1],
+                          [0,0,0,-1,-1,-1],
+                          [0,0,-1,-1,-1,-1],
+                          [-1,-1,-1,-1,-1,-1],
+                          [0,-1,-1,-1,-1,-1],
+                          [0,-1,-1,-1,-1,-1]],
 
-		images.append(pygame.image.load("res/tile3.png"))
-		images.append(pygame.image.load("res/land.png"))
-		images.append(pygame.image.load("res/horiz.png"))
-		
-		return images
+                         [[0,0,-1,-1,-1,-1],
+                          [0,-1,-1,-1,-1,-1],
+                          [-1,-1,-1,-1,-1,-1],
+                          [-1,-1,-1,-1,-1,-1],
+                          [-1,-1,-1,-1,-1,-1],
+                          [-1,-1,-1,-1,-1,-1]]]
 
-	def getTile(self, coord_x, coord_y, coord_z):
-		if self.game_map[coord_z][coord_x][coord_y] != -1:
-			return self.tiles[self.game_map[coord_z][coord_x][coord_y]]
-		else:
-			return None
-	def getMaxCoordX(self):
-		return len(self.game_map[0][0])
-	def getMaxCoordY(self):
-		return len(self.game_map[0])
-	def getMaxCoordZ(self):
-		return len(self.game_map)
-	def renderMap(self, pos_x, pos_y):
-		for k in range(0,self.getMaxCoordZ()):	
-			for i in range(0, self.getMaxCoordX()):
-                		for j in range(0, self.getMaxCoordY()):
-                        		if self.getTile(i,j,k) is not None:
-                        			self.screen.blit(self.getTile(i,j,k), (pos_x + (j - i) * self.tile_width / 2, pos_y + (i + j) * self.tile_height / 2 - self.tile_height * k ))
-		
+    def loadImages(self):
+        images = []
+        images.append(pygame.image.load("res/land.png"))
+        return images
+
+    def getTile(self, coord_x, coord_y, coord_z):
+        if self.game_map[coord_z][coord_x][coord_y] != -1:
+            return self.tiles[self.game_map[coord_z][coord_x][coord_y]]
+        else:
+            return None
+
+    def getMaxCoordX(self):
+        return len(self.game_map[0][0])
+
+    def getMaxCoordY(self):
+            return len(self.game_map[0])
+
+    def getMaxCoordZ(self):
+            return len(self.game_map)
+
+    def renderMap(self, pos_x, pos_y):
+        for k in range(0,self.getMaxCoordZ()):
+            for i in range(0, self.getMaxCoordX()):
+                for j in range(0, self.getMaxCoordY()):
+                    if self.getTile(i,j,k) is not None:
+                        self.screen.blit(self.getTile(i,j,k), (pos_x + (j - i) * self.tile_width / 2, pos_y + (i + j) * self.tile_height / 2 - self.tile_height * k ))
+
 # =======================================================================================
 def main():
     info()
@@ -108,18 +110,18 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-            	if event.key == pygame.K_LEFT:
-                	screen.fill(black)
-                	pos_x -= 10
-            	if event.key == pygame.K_RIGHT:
-                	screen.fill(black)
-                	pos_x += 10
-            	if event.key == pygame.K_UP:
-                	screen.fill(black)
-                	pos_y -= 10
-            	if event.key == pygame.K_DOWN:
-                	screen.fill(black)
-                	pos_y += 10
+                if event.key == pygame.K_LEFT:
+                    screen.fill(black)
+                    pos_x -= 10
+                if event.key == pygame.K_RIGHT:
+                    screen.fill(black)
+                    pos_x += 10
+                if event.key == pygame.K_UP:
+                    screen.fill(black)
+                    pos_y -= 10
+                if event.key == pygame.K_DOWN:
+                    screen.fill(black)
+                    pos_y += 10
 
         map.renderMap(pos_x, pos_y)
 
