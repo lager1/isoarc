@@ -81,11 +81,12 @@ class Map:
             return len(self.game_map)
 
     def renderMap(self, pos_x, pos_y):
-        for k in range(0,self.getMaxCoordZ()):
-            for i in range(0, self.getMaxCoordX()):
-                for j in range(0, self.getMaxCoordY()):
-                    if self.getTile(i,j,k) is not None:
-                        self.screen.blit(self.getTile(i,j,k), (pos_x + (j - i) * self.tile_width / 2, pos_y + (i + j) * self.tile_height / 2 - self.tile_height * k ))
+        for z in range(0,self.getMaxCoordZ()):
+            for x in range(0, self.getMaxCoordX()):
+                for y in range(0, self.getMaxCoordY()):
+                    if self.getTile(x, y, z) is not None:
+                        self.screen.blit(self.getTile(x, y, z), (pos_x + (y - x) * self.tile_width / 2,
+                                         pos_y + (x + y) * self.tile_height / 2 - self.tile_height * z))
 
 # =======================================================================================
 def main():
